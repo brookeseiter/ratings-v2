@@ -38,6 +38,24 @@ for movie in movie_data:
     model.db.session.add_all(movies_in_db)
     model.db.session.commit()
 
+    for n in range(10):
+        email = f'user{n}@test.com'  # Voila! A unique email!
+        password = 'test'
+
+        user = crud.create_user(email, password)
+        model.db.session.add(user)
+
+        random_movie = choice(movies_in_db)
+        random_score = randint(1, 5)
+
+        rating = crud.create_rating(user, random_movie, random_score)
+        model.db.session.add(rating)
+
+    model.db.session.commit()
+        #db_movie only for movies and not user/ratings bc we're randomly
+        #generating these and the movies come in the json file
+
+
 # alt for loop:
 #    for movie in movie_data:
 #     title, overview, poster_path = (
