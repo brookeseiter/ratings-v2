@@ -41,6 +41,27 @@ def all_users():
 
     return render_template('all_users.html', users=users)
 
+@app.route('/users', methods=["POST"])
+def register_user():
+    """Create a new user."""
+
+    email = request.form["email"]
+    password = request.form["password"]
+    # or email = request.form.get("email")
+
+    # or user = crud.get_user_by_email(email)
+    # if user: (line 54)
+    if crud.get_user_by_email(email):
+        flash("Cannot create account with provided email. User already exists, try again.")
+    else:
+        new_user = crud.create_user(email, password)
+        print(new_user)
+        db.session.add(new_user)
+        db.session.commit()
+        flash("Account created succesfully, you may log in.")
+        
+    return redirect('/')
+
 @app.route('/users/<user_id>')
 def show_user(user_id):
     """Show details of a particular user."""
@@ -48,8 +69,6 @@ def show_user(user_id):
     user = crud.get_user_by_id(user_id)
 
     return render_template('user_details.html', user=user)
-
-
 
 
 if __name__ == "__main__":
