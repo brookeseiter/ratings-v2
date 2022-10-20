@@ -62,6 +62,24 @@ def register_user():
         
     return redirect('/')
 
+@app.route('/login', methods=["POST"])
+def login():
+    """Log in."""
+
+    email = request.form["email"]
+    password = request.form["password"]
+    # or email = request.form.get("email")
+
+    user = crud.get_user_by_email(email)
+    if not user or user.password != password:
+        flash("The email or password you entered was incorrect.")
+    else:
+        # Log in user by storing the user's email in session
+        session["user_email"] = user.email
+        flash(f"Welcome back, {user.email}!")
+        
+    return redirect('/')
+
 @app.route('/users/<user_id>')
 def show_user(user_id):
     """Show details of a particular user."""
