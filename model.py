@@ -1,6 +1,7 @@
 """Models for movie ratings app."""
 
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 db = SQLAlchemy()
 
@@ -23,6 +24,7 @@ class User(db.Model):
 
 class Movie(db.Model):
     """A Movie."""
+    from datetime import datetime
 
     __tablename__ = "movies"
 
@@ -103,3 +105,6 @@ if __name__ == "__main__":
     #the attribute in the class with the relationship. In the example above 
     #this hint, we will now be able to access the ratings attribute on User 
     #objects because of the back_populates. 
+
+    #when creating an instance of one of these classes, the attributes
+    #listed in the declaration should be everything except the primary key
