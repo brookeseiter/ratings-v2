@@ -27,11 +27,27 @@ def all_movies():
 
 @app.route('/movies/<movie_id>')
 def show_movie(movie_id):
-    """Show details on a particular movie."""
+    """Show details of a particular movie."""
 
     movie = crud.get_movie_by_id(movie_id)
 
     return render_template('movie_details.html', movie=movie)
+
+@app.route('/users')
+def all_users():
+    """View all users."""
+
+    users = crud.get_users()
+
+    return render_template('all_users.html', users=users)
+
+@app.route('/users/<user_id>')
+def show_user(user_id):
+    """Show details of a particular user."""
+
+    user = crud.get_user_by_id(user_id)
+
+    return render_template('user_details.html', user=user)
 
 
 
